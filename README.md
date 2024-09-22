@@ -5,6 +5,6 @@
 
 2.使用方法
   下载项目zip，解压到文件夹
-  安装相应依赖
+  运行：pip requirements.txt 安装相应依赖
   配置setting.py
   运行main.py
