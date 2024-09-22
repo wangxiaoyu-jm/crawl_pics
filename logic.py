@@ -5,7 +5,6 @@
 日期：2024 年 9 月 15 日]
 """
 import time
-
 import setting
 import function as fun
 
@@ -23,13 +22,20 @@ def get_page_link(r):
             title=lst[0][0]
             print(f'获取到标题{title}')
             time.sleep(2)
-            print('开始下载图片……')
-            srcs=lst[1]
-            fun.download_images_in_threads(url_list=srcs,folder_name=f'{save_path}/{title}',x=2)
-            print('图片下载完成')
-            input('任意键返回菜单')
-            menu()
-
+            add=input('是否添加网址：y/n')
+            if add=='y':
+                srcs=fun.add_str_front(lst=lst[1],add_str=setting.setting["add_website"])
+                print('开始下载图片……')
+                fun.download_images_in_threads(url_list=srcs,folder_name=f'{save_path}/{title}',x=2)
+                print('图片下载完成')
+                input('任意键返回菜单')
+                menu()
+            else:
+                srcs = lst[1]
+                fun.download_images_in_threads(url_list=srcs, folder_name=f'{save_path}/{title}', x=2)
+                print('图片下载完成')
+                input('任意键返回菜单')
+                menu()
     elif r=='2':
         url=setting.setting["page_url"]
         if url:
@@ -45,10 +51,18 @@ def get_page_link(r):
                     ti_src=response(i,xplaw3)
                     title=ti_src[0][0]
                     print(f'获取到标题{title}')
-                    srcs=ti_src[1]
-                    time.sleep(2)
-                    print('开始下载图片……')
-                    fun.download_images_in_threads(url_list=srcs, folder_name=f'{save_path}/{title}', x=2)
+
+                    add = input('是否添加网址：y/n\n>>')
+                    if add == 'y':
+                        srcs = fun.add_str_front(lst=ti_src[1], add_str=setting.setting["add_website"])
+                        print('开始下载图片……')
+                        time.sleep(2)
+                        fun.download_images_in_threads(url_list=srcs, folder_name=f'{save_path}/{title}', x=2)
+                    else:
+                        srcs = ti_src[1]
+                        print('开始下载图片……')
+                        time.sleep(2)
+                        fun.download_images_in_threads(url_list=srcs, folder_name=f'{save_path}/{title}', x=2)
 
                 print('图片下载完成')
                 input('任意键返回菜单')
